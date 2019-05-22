@@ -24,8 +24,8 @@ print("state space size = ",state_space_size)
 
 q_table = np.zeros((state_space_size, action_space_size))
 
-num_episodes = 2000
-max_steps_per_episode = 100
+num_episodes = 4
+max_steps_per_episode = 30
 
 learning_rate = 0.1
 discount_rate = 0.99
@@ -33,12 +33,14 @@ discount_rate = 0.99
 exploration_rate = 1
 max_exploration_rate = 1
 min_exploration_rate = 0.01
-exploration_decay_rate = 0.001
+exploration_decay_rate = 0.005
 
 rewards_all_episodes = []
 goal_reached=0
 holesEncountered=0
 succesfulEpisode=0
+
+
 # Q-learning algorithm
 for episode in range(num_episodes):
     state = env.reset()
@@ -46,6 +48,7 @@ for episode in range(num_episodes):
     rewards_current_episode = 0
     #print("*****EPISODE ", episode+1, "*****\n")
     #time.sleep(1)
+
     episode+1
     for step in range(max_steps_per_episode):
        
@@ -60,9 +63,10 @@ for episode in range(num_episodes):
             action = env.action_space.sample()
 
         new_state, reward, done, info = env.step(action)
-        if episode==1999:
+        if episode==3:
             print("\n\nrandomly generated exploration rate threshold =",exploration_rate_threshold)
             print("\nStep #",step)
+            time.sleep(1)
             env.render()
             
         # Update Q-table for Q(s,a)
